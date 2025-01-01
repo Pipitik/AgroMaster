@@ -1,6 +1,6 @@
 #include "application.hpp"
 
-void try_create_database(Wt::Dbo::SqlConnectionPool& pool)
+void create_database(Wt::Dbo::SqlConnectionPool& pool)
 {
     using namespace agromaster;
 
@@ -43,7 +43,7 @@ int main(int argc, char* argv[])
             "host=localhost password=example dbname=agronomy user=postgres");
 
         auto connection_pool = std::make_unique<Wt::Dbo::FixedSqlConnectionPool>(std::move(connection), 10);
-        try_create_database(*connection_pool);
+        create_database(*connection_pool);
 
         server.addEntryPoint(Wt::EntryPointType::Application,
             [&connection_pool](const Wt::WEnvironment& env)

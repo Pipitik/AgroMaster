@@ -4,6 +4,8 @@
 
 #include <Wt/Dbo/Dbo.h>
 
+#include "works.hpp"
+
 namespace agromaster
 {
 namespace models
@@ -17,6 +19,7 @@ struct hothouse
     double yields;
     double spent_fertilizers;
     Wt::Dbo::ptr<crop> crop;
+    Wt::Dbo::weak_ptr<works> works;
 
     template <typename Action>
     void persist(Action& action)
@@ -26,6 +29,7 @@ struct hothouse
         Wt::Dbo::field(action, spent_fertilizers, "spent_fertilizers");
         Wt::Dbo::belongsTo(action, crop, "crop",
             Wt::Dbo::ForeignKeyConstraint(Wt::Dbo::OnUpdateCascade | Wt::Dbo::OnDeleteSetNull));
+        Wt::Dbo::hasOne(action, works);
     }
 };
 

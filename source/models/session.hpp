@@ -9,6 +9,7 @@
 #include <Wt/Dbo/Session.h>
 #include <Wt/Dbo/SqlConnectionPool.h>
 
+#include "works.hpp"
 #include "hothouse.hpp"
 #include "schedules.hpp"
 #include "crop.hpp"
@@ -37,6 +38,9 @@ public:
         mapClass<agromaster::models::watering_schedules>("watering_schedules");
         mapClass<agromaster::models::schedules>("schedules");
         mapClass<agromaster::models::hothouse>("hothouse");
+        mapClass<agromaster::models::fertilizer_works>("fertilizer_works");
+        mapClass<agromaster::models::watering_works>("watering_works");
+        mapClass<agromaster::models::works>("works");
     }
 
     Wt::Dbo::ptr<user_account> user() const;

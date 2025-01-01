@@ -15,6 +15,9 @@ struct schedules;
 
 struct fertilizer_schedules
 {
+    fertilizer_schedules() = default;
+    explicit fertilizer_schedules(const Wt::WDate& d) : date(d) {}
+
     Wt::WDate date;
     Wt::Dbo::ptr<schedules> schedules;
 
@@ -29,6 +32,9 @@ struct fertilizer_schedules
 
 struct watering_schedules
 {
+    watering_schedules() = default;
+    explicit watering_schedules(const Wt::WDate& d) : date(d) {}
+
     Wt::WDate date;
     Wt::Dbo::ptr<schedules> schedules;
 

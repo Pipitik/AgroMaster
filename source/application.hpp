@@ -27,27 +27,59 @@ static constexpr char hothouses[] = "/hothouses/";
 static constexpr char crops[] = "/crops/";
 } // internal_path
 
-class application : public Wt::WApplication
+class application final : public Wt::WApplication
 {
 public:
     application(const Wt::WEnvironment& env, Wt::Dbo::SqlConnectionPool& connection_pool);
 
 private:
-    void set_auth_widget();
-    void set_navigation_bar(const Wt::WString& login_name);
     void handle_path_changes();
-    void set_hothouses_table();
-    void set_crop_table();
-
+    void set_navigation_bar(const Wt::WString& login_name);
+    
     void add_hothouse_row(Wt::WTable& table, int index, const agromaster::models::hothouse& hothouse);
-    void add_crop_row(Wt::WTable& table, int index, const agromaster::models::crop& crop);
-
+    void set_hothouses_table();    
+    void update_hothouses_table();
     void show_dialog_add_hothouse();
+    void handle_add_hothouse(const std::string& title, const std::string& crop_title);
+    void show_dialog_change_hothouse(
+        Wt::WText* current_title,
+        Wt::WText* current_crop_title,
+        Wt::WText* current_yields,
+        Wt::WText* current_spent_fertilizers);
+    void handle_change_hothouse(
+        const std::string& new_title,
+        const std::string& new_crop,
+        const std::string& new_yields,
+        const std::string& new_spent_fertilizers,
+        Wt::WText* current_title,
+        Wt::WText* current_crop_title,
+        Wt::WText* current_yields,
+        Wt::WText* current_spent_fertilizers);
+    void show_dialog_hothouse_works(Wt::WText* title);
+    void handle_change_hothouse_works(
+        const std::string& title,
+        const Wt::WDate& sowing_date,
+        const Wt::WDate& harvest_date,
+        const std::set<Wt::WDate>& fertilizer_dates,
+        const std::set<Wt::WDate>& watering_dates);
+    void handle_delete_hothouse(const Wt::WTableRow* row, const Wt::WString& hothouse_title);
 
+    void add_crop_row(Wt::WTable& table, int index, const agromaster::models::crop& crop);
+    void set_crops_table();
+    void update_crops_table();
     void show_dialog_add_crop();
-    void show_dialog_change_crop(Wt::WText* crop_title);
+    void handle_add_crop(const std::string& title);
+    void show_dialog_change_crop(Wt::WText* title);
+    void show_dialog_crop_schedules(Wt::WText* title);
+    void handle_change_crop_schedules(
+        const std::string& title,
+        const Wt::WDate& sowing_date,
+        const Wt::WDate& harvest_date,
+        const std::set<Wt::WDate>& fertilizer_dates,
+        const std::set<Wt::WDate>& watering_dates);
     void handle_delete_crop(const Wt::WTableRow* row, const Wt::WString& crop_title);
 
+    void set_auth_widget();
     void handle_auth();
 
     models::session db_session_;
